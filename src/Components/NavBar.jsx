@@ -1,8 +1,24 @@
-import React from 'react'
-import {Box,Drawer,List,ListItem,ListItemText,Typography} from '@mui/material'
+import {Box,Drawer,List,ListItem,ListItemText} from '@mui/material'
 
 export default function NavBar({handleToggleDrawer,open,handleNavClick}) {
-  const navItems = ['Home', 'About', 'Project', 'CV', 'Contact'];
+  const navLinks = [
+  { label: 'Home', to: 'home' },
+  { label: 'About', to: 'about' },
+  { label: 'Projects', to: 'projects' },
+  { label: 'CV', to: 'https://docs.google.com/document/d/11lFrm_Dqpk_tWv8IVA64iP-Ppb9_UmEf/edit?usp=sharing&ouid=112673778335244173708&rtpof=true&sd=true' },
+  { label: 'Contact', to: 'contact' },
+];
+function handleNavClick(to) {
+  if (to.startsWith('http')) {
+    window.open(to, '_blank');
+  } else {
+    const section = document.getElementById(to);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}
+
   return (
       <Drawer
         anchor="top"
@@ -23,15 +39,11 @@ export default function NavBar({handleToggleDrawer,open,handleNavClick}) {
           justifyContent="center"
           sx={{ height: '100%' }}
         >
-          <Typography variant="h5" mb={4}>
-            Navigation
-          </Typography>
           <List>
-            {navItems.map((item) => (
+            {navLinks.map((item) => (
               <ListItem
                 key={item}
-                button
-                onClick={() => handleNavClick(item)}
+                onClick={() => handleNavClick(item.to)}
                 sx={{
                   justifyContent: 'center',
                   '&:hover': {
@@ -40,7 +52,7 @@ export default function NavBar({handleToggleDrawer,open,handleNavClick}) {
                 }}
               >
                 <ListItemText
-                  primary={item}
+                  primary={item.label}
                   primaryTypographyProps={{ fontSize: 20, textAlign: 'center' }}
                 />
               </ListItem>

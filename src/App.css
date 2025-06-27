@@ -1,0 +1,5 @@
+.input-error::placeholder,
+.textarea-error::placeholder {
+  color: #f44336 !important;
+  opacity: 1;
+}

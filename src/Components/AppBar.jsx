@@ -1,4 +1,3 @@
-import React from 'react'
 import{ Toolbar,Typography,Button,Box,useScrollTrigger,Slide,IconButton} from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar'
 import MenuIcon from '@mui/icons-material/Menu';
@@ -12,14 +11,26 @@ function HideOnScroll({ children }) {
   )
 }
 
-const navLinks = [
+
+export default function AppBar({handleToggleDrawer}) {
+  const navLinks = [
   { label: 'Home', to: 'home' },
   { label: 'About', to: 'about' },
   { label: 'Projects', to: 'projects' },
-  { label: 'CV', to: 'cv' },
+  { label: 'CV', to: 'https://docs.google.com/document/d/11lFrm_Dqpk_tWv8IVA64iP-Ppb9_UmEf/edit?usp=sharing&ouid=112673778335244173708&rtpof=true&sd=true ' },
   { label: 'Contact', to: 'contact' },
 ]
-export default function AppBar({handleToggleDrawer}) {
+
+  function handleNavClick(to) {
+    if (to.startsWith('http')) {
+      window.open(to, '_blank');
+    } else {
+      const section = document.getElementById(to);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+}
   return (
     <HideOnScroll>
       <MuiAppBar position="sticky" color="default" sx={{ bgcolor: '#000', color: '#fff', boxShadow: 0, borderBottom:"1px solid", borderColor:"primary.main"}}>
@@ -47,7 +58,8 @@ export default function AppBar({handleToggleDrawer}) {
             ))}
           </Box>
           <IconButton
-          onClick={handleToggleDrawer}
+            onClick={handleToggleDrawer}
+            button ="true"
             size="xl"
             aria-label="menu"
             color='primary'
